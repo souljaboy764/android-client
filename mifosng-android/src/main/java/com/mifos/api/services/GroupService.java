@@ -10,6 +10,8 @@ import com.mifos.objects.client.Page;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.group.GroupWithAssociations;
 import com.mifos.objects.group.GroupPayload;
+import com.mifos.objects.templates.loans.CalendarOptions;
+import com.mifos.objects.templates.loans.MeetingCalendarTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,10 @@ public interface GroupService {
     @GET(APIEndPoint.GROUPS + "/{groupId}?associations=all")
     Observable<GroupWithAssociations> getGroupWithAssociations(@Path("groupId") int groupId);
 
+    @GET(APIEndPoint.GROUPS + "/{groupId}/calenders/template")
+    Observable<MeetingCalendarTemplate> getMeetingCalenderTemplate(@Path("groupId") int groupId);
+
+
     @GET(APIEndPoint.GROUPS)
     Observable<List<Group>> getAllGroupsInOffice(@Query("officeId") int officeId,
                                                  @QueryMap Map<String, Object> params);
@@ -47,5 +53,10 @@ public interface GroupService {
 
     @GET(APIEndPoint.GROUPS + "/{groupId}/accounts")
     Observable<GroupAccounts> getGroupAccounts(@Path("groupId") int groupId);
+
+    //@GET(APIEndPoint.GROUPS + "/{groupId}/calendars")
+    @GET(APIEndPoint.GROUPS + "/{groupId}?associations=collectionMeetingCalendar")
+    //Observable<List<CalendarOptions>> getGroupMeetings(@Path("groupId") int groupId);
+    Observable<CalendarOptions> getGroupMeetings(@Path("groupId") int groupId);
 
 }

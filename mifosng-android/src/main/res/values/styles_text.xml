@@ -113,6 +113,13 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+    <style name="TextView.AttachMeeting" parent="TextView.Base">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:text">@string/attach_meeting</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
     <style name="TextView.Toolbar" parent="TextView.Base">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">16sp</item>

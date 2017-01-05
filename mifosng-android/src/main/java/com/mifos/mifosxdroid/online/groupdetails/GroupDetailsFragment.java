@@ -25,6 +25,7 @@ import com.mifos.mifosxdroid.adapters.LoanAccountsListAdapter;
 import com.mifos.mifosxdroid.adapters.SavingsAccountsListAdapter;
 import com.mifos.mifosxdroid.core.MifosBaseActivity;
 import com.mifos.mifosxdroid.core.ProgressableFragment;
+import com.mifos.mifosxdroid.online.attachmeeting.AttachMeetingFragment;
 import com.mifos.mifosxdroid.online.documentlist.DocumentListFragment;
 import com.mifos.mifosxdroid.online.grouploanaccount.GroupLoanAccountFragment;
 import com.mifos.objects.accounts.GroupAccounts;
@@ -282,6 +283,9 @@ public class GroupDetailsFragment extends ProgressableFragment implements GroupD
                 break;
             case R.id.group_clients:
                 mGroupDetailsPresenter.loadGroupAssociateClients(groupId);
+                break;
+            case R.id.attach_meeting:
+                ((MifosBaseActivity) getActivity()).replaceFragment(AttachMeetingFragment.newInstance(groupId,0), true, R.id.container);
                 break;
 
         }

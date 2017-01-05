@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:inAnimation="@android:anim/fade_in"
+    android:outAnimation="@android:anim/fade_out"
+    android:id="@+id/view_flipper">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/LinearLayout.Base">
+
+        <TextView style="@style/TextView.AttachMeeting" />
+
+        <TextView
+            android:id="@+id/tv_meeting_start_date"
+            android:text="@string/meeting_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:textSize="16sp"/>
+        <android.support.design.widget.TextInputLayout style="@style/TextInput.Base">
+                <EditText
+                    android:id="@+id/et_meeting_select_date"
+                    style="@style/EditText.BaseWidth"
+                    android:gravity="start"
+                    android:hint="@string/meeting_select_date"
+                    android:inputType="text"
+                    android:paddingBottom="16dp"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/cb_meeting_repeat"
+            android:text="@string/meeting_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+
+        <TableLayout
+            android:id="@+id/tl_meeting_repeat_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <TableRow
+                android:paddingTop="10dp">
+                <TextView
+                    android:text="@string/meeting_repeat_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+            </TableRow>
+
+            <TableRow
+                android:paddingTop="10dp">
+                <TextView
+                    android:text="@string/meeting_repeat_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:text="@string/meeting_repeat_frequency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+            </TableRow>
+
+            <TableRow
+                android:paddingTop="10dp">
+                <Spinner
+                    android:id="@+id/sp_meeting_repeat_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp"
+                    android:entries="@array/meeting_repeat_types"/>
+
+
+                <Spinner
+                    android:id="@+id/sp_meeting_repeat_frequency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_meeting_repeat_suffix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"/>
+
+                <Spinner
+                    android:id="@+id/sp_meeting_repeat_days_of_week"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:textSize="16sp"
+                    android:entries="@array/meeting_days_of_week"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/bt_meeting_submit"
+            android:text="@string/submit"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</ScrollView>

@@ -286,6 +286,47 @@
 
     <string name="center_add_client">Add Client</string>
 
+    <!-- Attach Meeting Terms -->
+    <string name="meeting_start_date">Meeting Start Date</string>
+    <string name="meeting_select_date">Select Date</string>
+    <string name="meeting_repeat">Repeat</string>
+    <string name="meeting_repeat_details">Repeat Details</string>
+    <string name="meeting_repeat_type">Repeats</string>
+    <string name="meeting_repeat_frequency">Repeats Every</string>
+
+    <string-array name="meeting_repeat_types">
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+        <item>yearly</item>
+    </string-array>
+
+    <string-array name="meeting_repeat_type_suffix">
+        <item>day(s)</item>
+        <item>week(s)</item>
+        <item>month(s)</item>
+        <item>year(s)</item>
+    </string-array>
+
+    <string-array name="meeting_days_of_week">
+        <item>MON</item>
+        <item>TUE</item>
+        <item>WED</item>
+        <item>THU</item>
+        <item>FRI</item>
+        <item>SAT</item>
+        <item>SUN</item>
+    </string-array>
+
+    <integer-array name="meeting_repeat_frequency_limits">
+        <item>3</item>
+        <item>5</item>
+        <item>11</item>
+        <item>3</item>
+    </integer-array>
+
+    <string name="attach_meeting">Attach Meeting</string>
+
     <!-- Menu Item Names Begin Here -->
     <string name="action_settings">Settings</string>
     <string name="logout">Logout</string>

@@ -8,6 +8,7 @@ import com.mifos.objects.client.Page;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.group.GroupPayload;
 import com.mifos.objects.group.GroupWithAssociations;
+import com.mifos.objects.templates.loans.MeetingCalendarTemplate;
 import com.mifos.utils.PrefManager;
 
 import java.util.List;
@@ -156,6 +157,21 @@ public class DataManagerGroups {
 
             default:
                 return Observable.just(new GroupAccounts());
+        }
+    }
+
+    /**
+     * This method fetch the Group Meeting Template
+     *
+     * @param groupId Group Id
+     * @return GroupAccounts
+     */
+    public Observable<MeetingCalendarTemplate> getMeetingCalenderTemplate(int groupId) {
+        switch (PrefManager.getUserStatus()) {
+            case 0:
+                return mBaseApiManager.getGroupApi().getMeetingCalenderTemplate(groupId);
+            default:
+                return Observable.just(new MeetingCalendarTemplate());
         }
     }
 

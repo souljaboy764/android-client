@@ -25,4 +25,10 @@
         android:title="@string/group_clients"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/attach_meeting"
+        android:enabled="true"
+        android:title="@string/attach_meeting"
+        app:showAsAction="never" />
+
 </menu>

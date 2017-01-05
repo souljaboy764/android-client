@@ -24,6 +24,17 @@ public class Constants {
 
     public static final String API_PATH = "/mifosng-provider/api/v1";
 
+    /**
+     * Meeting Repetition Frequency Types
+     */
+
+    public static final int REPEATED_DAILY = 0;
+
+    public static final int REPEATED_WEEKLY = 1;
+
+    public static final int REPEATED_MONTHLY = 2;
+
+    public static final int REPEATED_YEARLY = 3;
 
     /**
      * Entity Type, Like Clients, Groups, Staff, Loans, Savings and Client Identifiers
