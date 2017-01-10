@@ -285,7 +285,7 @@ public class GroupDetailsFragment extends ProgressableFragment implements GroupD
                 mGroupDetailsPresenter.loadGroupAssociateClients(groupId);
                 break;
             case R.id.attach_meeting:
-                ((MifosBaseActivity) getActivity()).replaceFragment(AttachMeetingFragment.newInstance(groupId,0), true, R.id.container);
+                ((MifosBaseActivity) getActivity()).replaceFragment(AttachMeetingFragment.newInstance(groupId,Constants.CALENDER_ENTITIY_TYPE_GROUP), true, R.id.container);
                 break;
 
         }

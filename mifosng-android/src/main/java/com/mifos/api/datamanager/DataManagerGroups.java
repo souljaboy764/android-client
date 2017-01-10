@@ -5,6 +5,8 @@ import com.mifos.api.local.databasehelper.DatabaseHelperClient;
 import com.mifos.api.local.databasehelper.DatabaseHelperGroups;
 import com.mifos.objects.accounts.GroupAccounts;
 import com.mifos.objects.client.Page;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendar;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendarPayload;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.group.GroupPayload;
 import com.mifos.objects.group.GroupWithAssociations;
@@ -169,9 +171,25 @@ public class DataManagerGroups {
     public Observable<MeetingCalendarTemplate> getMeetingCalenderTemplate(int groupId) {
         switch (PrefManager.getUserStatus()) {
             case 0:
-                return mBaseApiManager.getGroupApi().getMeetingCalenderTemplate(groupId);
+                return mBaseApiManager.getGroupApi().getMeetingCalendarTemplate(groupId);
             default:
                 return Observable.just(new MeetingCalendarTemplate());
+        }
+    }
+
+    /**
+     * This method fetch the Group Meeting Template
+     *
+     * @param collectionMeetingCalendarPayload CollectionMeetingCalendarPayload
+     * @return GroupAccounts
+     */
+    public Observable<CollectionMeetingCalendar> attachGroupMeetingCalender(CollectionMeetingCalendarPayload collectionMeetingCalendarPayload) {
+        switch (PrefManager.getUserStatus()) {
+            case 0:
+                return mBaseApiManager.getGroupApi().attachGroupMeetingCalendar(collectionMeetingCalendarPayload.getEntityId(),
+                                                                                collectionMeetingCalendarPayload);
+            default:
+                return Observable.just(new CollectionMeetingCalendar());
         }
     }
 

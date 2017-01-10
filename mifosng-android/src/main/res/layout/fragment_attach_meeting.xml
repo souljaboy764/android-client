@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:inAnimation="@android:anim/fade_in"
-    android:outAnimation="@android:anim/fade_out"
-    android:id="@+id/view_flipper">
+    android:outAnimation="@android:anim/fade_out">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/LinearLayout.Base">
@@ -25,7 +24,8 @@
                     android:gravity="start"
                     android:hint="@string/meeting_select_date"
                     android:inputType="text"
-                    android:paddingBottom="16dp"/>
+                    android:paddingBottom="16dp"
+                    android:editable="false"/>
         </android.support.design.widget.TextInputLayout>
 
         <CheckBox

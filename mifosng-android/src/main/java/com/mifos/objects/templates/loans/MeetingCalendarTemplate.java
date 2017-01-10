@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import java.util.Arrays;
 import java.util.List;
 
+import com.mifos.objects.collectionsheet.EntityType;
+
 /**
  * Created by souljaboy764 on 5/1/17.
  */
@@ -14,35 +16,35 @@ public class MeetingCalendarTemplate implements Parcelable{
 
     Integer duration;
 
-    CalendarOptionsType type;
+    EntityType type;
 
     Boolean repeating;
 
-    Frequency frequency;
+    EntityType frequency;
 
     Integer interval;
 
-    RepeatsOnNthDayOfMonth repeatsOnNthDayOfMonth;
+    EntityType repeatsOnNthDayOfMonth;
 
-    RepeatsOnDay repeatsOnDay;
+    EntityType repeatsOnDay;
 
     Integer firstReminder;
 
     Integer secondReminder;
 
-    RemindBy remindBy;
+    EntityType remindBy;
 
     List<EntityType> entityTypeOptions;
 
-    List<CalendarType> calendarTypeOptions;
+    List<EntityType> calendarTypeOptions;
 
-    List<RemindBy> remindByOptions;
+    List<EntityType> remindByOptions;
 
-    List<Frequency> frequencyOptions;
+    List<EntityType> frequencyOptions;
 
-    List<RepeatsOnDay> repeatsOnDayOptions;
+    List<EntityType> repeatsOnDayOptions;
 
-    List<FrequencyNthDayType> frequencyNthDayTypeOptions;
+    List<EntityType> frequencyNthDayTypeOptions;
 
     public Integer getDuration() {
         return duration;
@@ -51,10 +53,10 @@ public class MeetingCalendarTemplate implements Parcelable{
         this.duration = duration;
     }
 
-    public CalendarOptionsType getType() {
+    public EntityType getType() {
         return type;
     }
-    public void setType(CalendarOptionsType type) {
+    public void setType(EntityType type) {
         this.type = type;
     }
 
@@ -65,10 +67,10 @@ public class MeetingCalendarTemplate implements Parcelable{
         this.repeating = repeating;
     }
 
-    public Frequency getFrequency() {
+    public EntityType getFrequency() {
         return frequency;
     }
-    public void setFrequency(Frequency frequency) {
+    public void setFrequency(EntityType frequency) {
         this.frequency = frequency;
     }
 
@@ -79,17 +81,17 @@ public class MeetingCalendarTemplate implements Parcelable{
         this.interval = interval;
     }
 
-    public RepeatsOnNthDayOfMonth getRepeatsOnNthDayOfMonth() {
+    public EntityType getRepeatsOnNthDayOfMonth() {
         return repeatsOnNthDayOfMonth;
     }
-    public void setRepeatsOnNthDayOfMonth(RepeatsOnNthDayOfMonth repeatsOnNthDayOfMonth) {
+    public void setRepeatsOnNthDayOfMonth(EntityType repeatsOnNthDayOfMonth) {
         this.repeatsOnNthDayOfMonth = repeatsOnNthDayOfMonth;
     }
 
-    public RepeatsOnDay getRepeatsOnDay() {
+    public EntityType getRepeatsOnDay() {
         return repeatsOnDay;
     }
-    public void setRepeatsOnDay(RepeatsOnDay repeatsOnDay) {
+    public void setRepeatsOnDay(EntityType repeatsOnDay) {
         this.repeatsOnDay = repeatsOnDay;
     }
 
@@ -107,10 +109,10 @@ public class MeetingCalendarTemplate implements Parcelable{
         this.secondReminder = secondReminder;
     }
 
-    public RemindBy getRemindBy() {
+    public EntityType getRemindBy() {
         return remindBy;
     }
-    public void setRemindBy(RemindBy remindBy) {
+    public void setRemindBy(EntityType remindBy) {
         this.remindBy = remindBy;
     }
 
@@ -121,38 +123,38 @@ public class MeetingCalendarTemplate implements Parcelable{
         this.entityTypeOptions = entityTypeOptions;
     }
 
-    public List<CalendarType> getCalendarTypeOptions() {
+    public List<EntityType> getCalendarTypeOptions() {
         return calendarTypeOptions;
     }
-    public void setCalendarTypeOptions(List<CalendarType> calendarTypeOptions) {
+    public void setCalendarTypeOptions(List<EntityType> calendarTypeOptions) {
         this.calendarTypeOptions = calendarTypeOptions;
     }
 
-    public List<RemindBy> getRemindByOptions() {
+    public List<EntityType> getRemindByOptions() {
         return remindByOptions;
     }
-    public void setRemindByOptions(List<RemindBy> remindByOptions) {
+    public void setRemindByOptions(List<EntityType> remindByOptions) {
         this.remindByOptions = remindByOptions;
     }
 
-    public List<Frequency> getFrequencyOptions() {
+    public List<com.mifos.objects.collectionsheet.EntityType> getFrequencyOptions() {
         return frequencyOptions;
     }
-    public void setFrequencyOptions(List<Frequency> frequencyOptions) {
+    public void setFrequencyOptions(List<EntityType> frequencyOptions) {
         this.frequencyOptions = frequencyOptions;
     }
 
-    public List<RepeatsOnDay> getRepeatsOnDayOptions() {
+    public List<EntityType> getRepeatsOnDayOptions() {
         return repeatsOnDayOptions;
     }
-    public void setRepeatsOnDayOptions(List<RepeatsOnDay> repeatsOnDayOptions) {
+    public void setRepeatsOnDayOptions(List<EntityType> repeatsOnDayOptions) {
         this.repeatsOnDayOptions = repeatsOnDayOptions;
     }
 
-    public List<FrequencyNthDayType> getFrequencyNthDayTypeOptions() {
+    public List<EntityType> getFrequencyNthDayTypeOptions() {
         return frequencyNthDayTypeOptions;
     }
-    public void setFrequencyNthDayTypeOptions(List<FrequencyNthDayType> frequencyNthDayTypeOptions) {
+    public void setFrequencyNthDayTypeOptions(List<EntityType> frequencyNthDayTypeOptions) {
         this.frequencyNthDayTypeOptions = frequencyNthDayTypeOptions;
     }
 
@@ -213,16 +215,16 @@ public class MeetingCalendarTemplate implements Parcelable{
         this.frequency = in.readParcelable(Frequency.class.getClassLoader());
         this.interval = in.readInt();
         this.repeatsOnNthDayOfMonth = in.readParcelable(RepeatsOnNthDayOfMonth.class.getClassLoader());
-        this.repeatsOnDay = in.readParcelable(RepeatsOnDay.class.getClassLoader());
+        this.repeatsOnDay = in.readParcelable(EntityType.class.getClassLoader());
         this.firstReminder = in.readInt();
         this.secondReminder = in.readInt();
-        this.remindBy = in.readParcelable(RemindBy.class.getClassLoader());
+        this.remindBy = in.readParcelable(EntityType.class.getClassLoader());
         this.entityTypeOptions = in.createTypedArrayList(EntityType.CREATOR);
-        this.calendarTypeOptions = in.createTypedArrayList(CalendarType.CREATOR);
-        this.remindByOptions = in.createTypedArrayList(RemindBy.CREATOR);
-        this.frequencyOptions = in.createTypedArrayList(Frequency.CREATOR);
-        this.repeatsOnDayOptions = in.createTypedArrayList(RepeatsOnDay.CREATOR);
-        this.frequencyNthDayTypeOptions = in.createTypedArrayList(FrequencyNthDayType.CREATOR);
+        this.calendarTypeOptions = in.createTypedArrayList(EntityType.CREATOR);
+        this.remindByOptions = in.createTypedArrayList(EntityType.CREATOR);
+        this.frequencyOptions = in.createTypedArrayList(EntityType.CREATOR);
+        this.repeatsOnDayOptions = in.createTypedArrayList(EntityType.CREATOR);
+        this.frequencyNthDayTypeOptions = in.createTypedArrayList(EntityType.CREATOR);
     }
 
     public static final Parcelable.Creator<MeetingCalendarTemplate> CREATOR = new Parcelable

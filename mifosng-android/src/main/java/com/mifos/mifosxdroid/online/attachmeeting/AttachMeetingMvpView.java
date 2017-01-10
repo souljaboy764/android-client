@@ -5,6 +5,7 @@ import com.mifos.objects.accounts.GroupAccounts;
 import com.mifos.objects.client.Client;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.noncore.DataTable;
+import com.mifos.objects.templates.loans.MeetingCalendarTemplate;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ public interface AttachMeetingMvpView extends MvpView {
 
     void loadFrequencyOptions(int index);
 
-    void showFetchingError(int errorMessage);
+    void getGroupMeetingCalendarTemplate(MeetingCalendarTemplate meetingCalendarTemplate);
+
+    void meetingAttachedSuccessfully();
+
+    void showFetchingError(String errorMessage);
 }

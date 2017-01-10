@@ -36,12 +36,24 @@ public class Constants {
 
     public static final int REPEATED_YEARLY = 3;
 
+    //Meeting Title suffix
+    public static final String MEETING_TITLE_SUFFIX = "_CollectionMeeting";
+
+    //Position in options array for setting Calender Entity types
+    public static final int CALENDER_ENTITIY_TYPE_GROUP = 2;
+
+    public static final int CALENDER_ENTITIY_TYPE_CENTER = 4;
+
+
+
     /**
      * Entity Type, Like Clients, Groups, Staff, Loans, Savings and Client Identifiers
      */
     public static final String ENTITY_TYPE_CLIENTS = "clients";
 
     public static final String ENTITY_TYPE_GROUPS = "groups";
+
+    public static final String ENTITY_TYPE_CENTERS = "centers";
 
     public static final String ENTITY_TYPE_LOANS = "loans";
 

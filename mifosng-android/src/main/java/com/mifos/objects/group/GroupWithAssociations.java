@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
 import com.mifos.objects.Timeline;
 import com.mifos.objects.client.Client;
 import com.mifos.objects.client.Status;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,9 @@ public class GroupWithAssociations implements Parcelable {
 
     @SerializedName("clientMembers")
     List<Client> clientMembers = new ArrayList<>();
+
+    @SerializedName("collectionMeetingCalendar")
+    CollectionMeetingCalendar collectionMeetingCalendar;
 
     @SerializedName("timeline")
     Timeline timeline;
@@ -175,6 +179,14 @@ public class GroupWithAssociations implements Parcelable {
         this.clientMembers = clientMembers;
     }
 
+    public CollectionMeetingCalendar getCollectionMeetingCalendar(){
+        return collectionMeetingCalendar;
+    }
+
+    public void setCollectionMeetingCalendar(CollectionMeetingCalendar collectionMeetingCalendar) {
+        this.collectionMeetingCalendar = collectionMeetingCalendar;
+    }
+
     @Override
     public String toString() {
         return "GroupWithAssociations{" +
@@ -192,6 +204,7 @@ public class GroupWithAssociations implements Parcelable {
                 ", groupLevel=" + groupLevel +
                 ", clientMembers=" + clientMembers +
                 ", timeline=" + timeline +
+                ", collectionMeetingCalendar=" + collectionMeetingCalendar +
                 '}';
     }
 
@@ -217,6 +230,7 @@ public class GroupWithAssociations implements Parcelable {
         dest.writeValue(this.groupLevel);
         dest.writeTypedList(this.clientMembers);
         dest.writeParcelable(this.timeline, flags);
+        dest.writeParcelable(this.collectionMeetingCalendar,flags);
     }
 
     public GroupWithAssociations() {
@@ -238,6 +252,7 @@ public class GroupWithAssociations implements Parcelable {
         this.groupLevel = (Integer) in.readValue(Integer.class.getClassLoader());
         this.clientMembers = in.createTypedArrayList(Client.CREATOR);
         this.timeline = in.readParcelable(Timeline.class.getClassLoader());
+        this.collectionMeetingCalendar = in.readParcelable(CollectionMeetingCalendar.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<GroupWithAssociations> CREATOR =

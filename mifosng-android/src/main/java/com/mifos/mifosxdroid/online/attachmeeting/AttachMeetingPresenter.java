@@ -8,6 +8,8 @@ import com.mifos.api.datamanager.DataManagerGroups;
 import com.mifos.mifosxdroid.R;
 import com.mifos.mifosxdroid.base.BasePresenter;
 import com.mifos.objects.accounts.GroupAccounts;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendar;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendarPayload;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.group.GroupWithAssociations;
 import com.mifos.objects.noncore.DataTable;
@@ -74,9 +76,40 @@ public class AttachMeetingPresenter extends BasePresenter<AttachMeetingMvpView> 
                     @Override
                     public void onNext(MeetingCalendarTemplate meetingCalendarTemplate) {
                         Log.d(LOG_TAG, meetingCalendarTemplate.toString());
+                        getMvpView().getGroupMeetingCalendarTemplate(meetingCalendarTemplate);
                     }
                 })
         );
     }
+
+
+
+    public void attachMeeting(CollectionMeetingCalendarPayload collectionMeetingCalendarPayload) {
+        checkViewAttached();
+        getMvpView().showProgressbar(true);
+        mSubscriptions.add(mDataManagerGroups.attachGroupMeetingCalender(collectionMeetingCalendarPayload)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<CollectionMeetingCalendar>() {
+                    @Override
+                    public void onCompleted() {
+                        getMvpView().showProgressbar(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        getMvpView().showProgressbar(false);
+                        getMvpView().showFetchingError("Try again");
+                    }
+
+                    @Override
+                    public void onNext(CollectionMeetingCalendar collectionMeetingCalendar) {
+                        getMvpView().showProgressbar(false);
+                        getMvpView().meetingAttachedSuccessfully();
+                    }
+                }));
+    }
+
 
 }

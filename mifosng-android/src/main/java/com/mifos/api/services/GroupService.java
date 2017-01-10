@@ -7,6 +7,8 @@ package com.mifos.api.services;
 import com.mifos.api.model.APIEndPoint;
 import com.mifos.objects.accounts.GroupAccounts;
 import com.mifos.objects.client.Page;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendar;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendarPayload;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.group.GroupWithAssociations;
 import com.mifos.objects.group.GroupPayload;
@@ -37,9 +39,11 @@ public interface GroupService {
     @GET(APIEndPoint.GROUPS + "/{groupId}?associations=all")
     Observable<GroupWithAssociations> getGroupWithAssociations(@Path("groupId") int groupId);
 
-    @GET(APIEndPoint.GROUPS + "/{groupId}/calenders/template")
-    Observable<MeetingCalendarTemplate> getMeetingCalenderTemplate(@Path("groupId") int groupId);
+    @GET(APIEndPoint.GROUPS + "/{groupId}/calendars/template")
+    Observable<MeetingCalendarTemplate> getMeetingCalendarTemplate(@Path("groupId") int groupId);
 
+    @POST(APIEndPoint.GROUPS + "/{groupId}/calendars")
+    Observable<CollectionMeetingCalendar> attachGroupMeetingCalendar(@Path("groupId") int groupId, @Body CollectionMeetingCalendarPayload collectionMeetingCalendarPayload);
 
     @GET(APIEndPoint.GROUPS)
     Observable<List<Group>> getAllGroupsInOffice(@Query("officeId") int officeId,

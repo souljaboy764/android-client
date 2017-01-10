@@ -1,15 +1,10 @@
 package com.mifos.mifosxdroid.online.attachmeeting;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,38 +14,25 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.joanzapata.iconify.fonts.MaterialIcons;
-import com.joanzapata.iconify.widget.IconTextView;
 import com.mifos.mifosxdroid.R;
-import com.mifos.mifosxdroid.adapters.LoanAccountsListAdapter;
-import com.mifos.mifosxdroid.adapters.SavingsAccountsListAdapter;
 import com.mifos.mifosxdroid.core.MifosBaseActivity;
 import com.mifos.mifosxdroid.core.MifosBaseFragment;
-import com.mifos.mifosxdroid.core.ProgressableFragment;
-import com.mifos.mifosxdroid.online.documentlist.DocumentListFragment;
-import com.mifos.mifosxdroid.online.grouploanaccount.GroupLoanAccountFragment;
-import com.mifos.objects.accounts.GroupAccounts;
-import com.mifos.objects.accounts.savings.DepositType;
-import com.mifos.objects.client.Client;
-import com.mifos.objects.group.Group;
-import com.mifos.objects.noncore.DataTable;
-import com.mifos.objects.templates.loans.CalendarType;
+import com.mifos.objects.collectionsheet.CollectionMeetingCalendarPayload;
+import com.mifos.objects.collectionsheet.EntityType;
+import com.mifos.objects.templates.loans.MeetingCalendarTemplate;
 import com.mifos.utils.Constants;
-import com.mifos.utils.FragmentConstants;
-import com.mifos.utils.Utils;
+import com.mifos.utils.DateHelper;
+import com.mifos.utils.PrefManager;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -94,6 +76,8 @@ public class AttachMeetingFragment extends MifosBaseFragment implements AttachMe
     @Inject
     AttachMeetingPresenter mAttachMeetingPresenter;
 
+    MeetingCalendarTemplate mMeetingCalenderTemplate;
+
     private View rootView;
     private int groupOrCenterId, groupOrCenterType;
 
@@ -125,7 +109,6 @@ public class AttachMeetingFragment extends MifosBaseFragment implements AttachMe
 
         ButterKnife.bind(this, rootView);
         mAttachMeetingPresenter.attachView(this);
-
         etMeetingSelectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -133,9 +116,9 @@ public class AttachMeetingFragment extends MifosBaseFragment implements AttachMe
                 new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                        ((EditText) view).setText(  Integer.toString(year) + "-" +
-                                                    Integer.toString(monthOfYear) + "-" +
-                                                    Integer.toString(dayOfMonth));
+                        ((EditText) view).setText(  String.valueOf(year) + "-" +
+                                                    String.valueOf(monthOfYear+1) + "-" +
+                                                    String.valueOf(dayOfMonth));
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -161,10 +144,50 @@ public class AttachMeetingFragment extends MifosBaseFragment implements AttachMe
             }
         });
 
-        spMeetingRepeatMode.setSelection(0);
+        spMeetingRepeatMode.setSelection(Constants.REPEATED_YEARLY);
 
+        btMeetingSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CollectionMeetingCalendarPayload collectionMeetingCalendarPayload = new CollectionMeetingCalendarPayload();
+                collectionMeetingCalendarPayload.setEntityId(groupOrCenterId);
+                collectionMeetingCalendarPayload.setEntityType(mMeetingCalenderTemplate.getEntityTypeOptions().get(groupOrCenterType));
+
+                String type = collectionMeetingCalendarPayload.getEntityType().getValue();
+                String title;
+                if(type.contentEquals(Constants.ENTITY_TYPE_GROUPS.toUpperCase()) ||
+                   type.contentEquals(Constants.ENTITY_TYPE_CENTERS.toUpperCase())) {
+                    title = type.toLowerCase() + "_" + Integer.toString(groupOrCenterId) + Constants.MEETING_TITLE_SUFFIX;
+                    collectionMeetingCalendarPayload.setTitle(title);
+                }
+
+                collectionMeetingCalendarPayload.setDuration(mMeetingCalenderTemplate.getDuration());
+
+                if(cbMeetingRepeat.isChecked()) {
+
+                    collectionMeetingCalendarPayload.setFrequency(mMeetingCalenderTemplate.getFrequencyOptions().get(spMeetingRepeatMode.getSelectedItemPosition()));
+                    collectionMeetingCalendarPayload.setInterval(Integer.parseInt(((TextView)spMeetingRepeatFrequency.getSelectedView()).getText().toString()));
+                    if(spMeetingRepeatMode.getSelectedItemPosition()==Constants.REPEATED_WEEKLY)
+                        collectionMeetingCalendarPayload.setRepeatsOnDay(mMeetingCalenderTemplate.getRepeatsOnDayOptions().get(spMeetingRepeatDaysOfWeek.getSelectedItemPosition()));
+                }
+
+                collectionMeetingCalendarPayload.setFirstReminder(0);
+                collectionMeetingCalendarPayload.setSecondReminder(0);
+                collectionMeetingCalendarPayload.setCalendarInstanceId(mMeetingCalenderTemplate.getCalendarTypeOptions().get(0).getId());
+                collectionMeetingCalendarPayload.setTypeId(mMeetingCalenderTemplate.getEntityTypeOptions().get(groupOrCenterType).getId());
+                if(!TextUtils.isEmpty(etMeetingSelectDate.getText().toString())) {
+                   collectionMeetingCalendarPayload.setStartDate(etMeetingSelectDate.getText().toString());
+                    mAttachMeetingPresenter.attachMeeting(collectionMeetingCalendarPayload);
+                } else {
+                    showFetchingError("Date Cannot be empty");
+                }
+            }
+        });
+
+        //btMeetingSubmit.performClick();
         return rootView;
     }
+
 
 
     @Override
@@ -177,6 +200,7 @@ public class AttachMeetingFragment extends MifosBaseFragment implements AttachMe
                 android.R.layout.simple_spinner_item,
                 frequencyOptions);
         spMeetingRepeatFrequency.setAdapter(spinnerArrayAdapter);
+        spMeetingRepeatFrequency.setSelection(0);
 
         tvMeetingRepeatSuffix.setText(getResources().getStringArray(R.array.meeting_repeat_type_suffix)[pos]);
 
@@ -185,8 +209,18 @@ public class AttachMeetingFragment extends MifosBaseFragment implements AttachMe
     }
 
     @Override
-    public void showFetchingError(int errorMessage) {
-        Toast.makeText(getActivity(), getStringMessage(errorMessage), Toast.LENGTH_SHORT).show();
+    public void meetingAttachedSuccessfully() {
+
+    }
+
+    @Override
+    public void showFetchingError(String errorMessage) {
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getGroupMeetingCalendarTemplate(MeetingCalendarTemplate meetingCalenderTemplate) {
+        this.mMeetingCalenderTemplate = meetingCalenderTemplate;
     }
 
 
